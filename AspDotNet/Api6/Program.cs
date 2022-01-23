@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TodoContext>(opt =>
-               opt.UseNpgsql("TodoList"));
+               opt.UseNpgsql(builder.Configuration.GetConnectionString("psql")));
 
 var app = builder.Build();
 
