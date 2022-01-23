@@ -27,4 +27,11 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+using var serviceScop = app.Services.CreateScope();
+var context = serviceScop.ServiceProvider.GetRequiredService<TodoContext>();
+if(context.Database.GetPendingMigrations().Any())
+{
+    context.Database.Migrate();
+}
+
 app.Run();
