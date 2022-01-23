@@ -26,12 +26,18 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
-using var serviceScop = app.Services.CreateScope();
-var context = serviceScop.ServiceProvider.GetRequiredService<TodoContext>();
-if(context.Database.GetPendingMigrations().Any())
+try
 {
-    context.Database.Migrate();
+    using var serviceScop = app.Services.CreateScope();
+    var context = serviceScop.ServiceProvider.GetRequiredService<TodoContext>();
+    if(context.Database.GetPendingMigrations().Any())
+    {
+        context.Database.Migrate();
+    }
+
+}
+catch
+{
 }
 
 app.Run();

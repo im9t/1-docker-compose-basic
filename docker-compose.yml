@@ -18,4 +18,5 @@ services:
     dotnetapi:
         build: ./AspDotNet/Api6/
         ports:
-          - "5001:7119"
+          - "5001:443"
+          - "5000:80"
