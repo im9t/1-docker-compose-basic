@@ -1,0 +1,13 @@
+FROM python:3.7
+
+RUN mkdir /code
+RUN apt-get update -y && \
+    apt-get install -y python3-pip
+
+RUN pip3 install pip --upgrade
+RUN pip3 install --no-cache-dir grpcio grpcio-tools jieba
+
+COPY . /code
+WORKDIR /code
+
+CMD ["python","word.py"]
