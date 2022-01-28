@@ -15,6 +15,7 @@ else
                opt.UseNpgsql(builder.Configuration.GetConnectionString("psql")));
 }
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
