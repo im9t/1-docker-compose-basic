@@ -4,8 +4,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<TodoContext>(opt =>
+if (builder.Environment.IsDevelopment())
+{
+    builder.Services.AddDbContext<TodoContext>(opt =>
+               opt.UseNpgsql(builder.Configuration.GetConnectionString("psqldev")));
+}
+else
+{
+    builder.Services.AddDbContext<TodoContext>(opt =>
                opt.UseNpgsql(builder.Configuration.GetConnectionString("psql")));
+}
 
 var app = builder.Build();
 
