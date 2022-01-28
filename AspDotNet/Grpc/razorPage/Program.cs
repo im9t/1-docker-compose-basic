@@ -41,3 +41,4 @@ catch
 }
 
 app.Run();
+//dotnet-aspnet-codegenerator razorpage -m TodoItem -dc TodoContext -udl -outDir Pages/TodoItems --referenceScriptLibraries -sqlite
