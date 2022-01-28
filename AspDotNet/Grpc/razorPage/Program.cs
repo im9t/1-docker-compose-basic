@@ -1,4 +1,5 @@
 using razorPage.Models;
+using razorPage.Services;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,7 @@ else
     builder.Services.AddDbContext<TodoContext>(opt =>
                opt.UseNpgsql(builder.Configuration.GetConnectionString("psql")));
 }
-
+builder.Services.AddSingleton(typeof(GrpcClient));
 
 var app = builder.Build();
 
