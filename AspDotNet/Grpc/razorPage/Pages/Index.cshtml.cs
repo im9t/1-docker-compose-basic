@@ -20,7 +20,7 @@ public class IndexModel : PageModel
     public void temp()
     {
 
-        var temp =_client.GetSplitWords("要上青天揽明月");
+        var temp =_client.GetSplitWords("晴空一鹤排云上");
         var temp2 =temp.Result;
     }
 }
