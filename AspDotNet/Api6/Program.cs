@@ -11,6 +11,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TodoContext>(opt =>
                opt.UseNpgsql(builder.Configuration.GetConnectionString("psql")));
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+    });
+});
 
 var app = builder.Build();
 
@@ -26,6 +33,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.UseCors();
 try
 {
     using var serviceScop = app.Services.CreateScope();
