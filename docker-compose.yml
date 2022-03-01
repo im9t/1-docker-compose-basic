@@ -21,6 +21,7 @@ services:
           - "5005:80"
         depends_on:
           - postgres
+        restart: always
     blazor:
         build: ./AspDotNet/BlazorWasm/
         ports:
