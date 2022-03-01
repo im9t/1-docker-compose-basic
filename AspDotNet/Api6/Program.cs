@@ -15,7 +15,6 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("testcors", policy =>
     {
-        policy.AllowCredentials();
         policy.AllowAnyOrigin();
         policy.AllowAnyHeader();
         policy.AllowAnyMethod();
