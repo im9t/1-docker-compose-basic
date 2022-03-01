@@ -13,7 +13,7 @@ builder.Services.AddDbContext<TodoContext>(opt =>
                opt.UseNpgsql(builder.Configuration.GetConnectionString("psqllocal")));
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("testcors", policy =>
     {
         policy.AllowCredentials();
         policy.AllowAnyOrigin();
@@ -36,7 +36,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.UseCors();
+app.UseCors("testcors");
 try
 {
     using var serviceScop = app.Services.CreateScope();
