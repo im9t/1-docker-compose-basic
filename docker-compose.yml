@@ -1,4 +1,10 @@
 version: '3.9'
+networks:
+  devops:
+    driver: overlay
+    ipam:
+      driver: default
+
 services:
     postgres:
         image: postgres

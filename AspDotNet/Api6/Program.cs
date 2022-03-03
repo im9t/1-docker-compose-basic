@@ -9,8 +9,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+Console.WriteLine("============Setting connection string============");
+var str = File.ReadAllText("/run/secrets/db_password");
+var password = str.Split("=")[1];
+var connectionString = $"User ID=postgres;Password={password};Host=postgres;Port=5432;Database=myDataBase;";
 builder.Services.AddDbContext<TodoContext>(opt =>
-               opt.UseNpgsql(builder.Configuration.GetConnectionString("psqllocal")));
+               opt.UseNpgsql(connectionString));
+Console.WriteLine("============Setting connection string done============");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("testcors", policy =>
