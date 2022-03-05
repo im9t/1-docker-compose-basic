@@ -1,9 +1,60 @@
 ﻿@page "/"
+@inject TodoClient Http
+@using BlazorWasm.Models
 
 <PageTitle>Index</PageTitle>
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
+Welcome to This simple todo app.
+<p> (@TodoItems.Count(todo => !todo.IsComplete))  Needs to be done</p>
+@if (TodoItems == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <ul>
+            @foreach (var todo in TodoItems)
+            {
+                <li>
+                    <input type="checkbox" @bind="todo.IsComplete" @onclick="@(e => UpdateItem(todo) )"/>
+                    <input @bind="todo.Name" />
+                </li>
+            }
+        </ul>
+    </table>
+
+    <input placeholder="Something todo" @bind="newTodo" />
+    <button @onclick="AddTodo">Add todo</button>
+}
 
 <SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private List<TodoItem> TodoItems = new();
+
+    private string? newTodo;
+
+    private async void UpdateItem(TodoItem item)
+    {
+        await Http.UpdateItem(item);
+    }
+
+    private async void AddTodo()
+    {
+        if (!string.IsNullOrWhiteSpace(newTodo))
+        {
+            @* TodoItems.Add(new TodoItem { Name = newTodo }); *@
+            await Http.AddTodoItem(newTodo);
+            newTodo = string.Empty;
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        TodoItems = await Http.GetTodoList();
+    }
+
+   
+}
+

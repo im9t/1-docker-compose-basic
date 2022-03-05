@@ -27,4 +27,32 @@ public class TodoClient
             return new WeatherForecast[0];
         }
     }
+
+    public async Task AddTodoItem(string content)
+    {
+        await http.PostAsync("api/TodoItems", JsonContent.Create<TodoItem>(new TodoItem{
+            Name = content
+        }));
+    }
+    public async Task UpdateItem(TodoItem todo)
+    {
+        object[] list = new object[2]{todo.Id, todo};
+        await http.PutAsync("api/TodoItems", JsonContent.Create<Object[]>(list));
+    }
+    public async Task<List<TodoItem>> GetTodoList()
+    {
+        try
+        {
+            var resp = await http.GetAsync("api/TodoItems");
+            var str = await resp.Content.ReadAsStringAsync();
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<List<TodoItem>>(str);
+
+        }
+        catch
+        {
+            return new List<TodoItem>();
+        }
+    }
+
+
 }
