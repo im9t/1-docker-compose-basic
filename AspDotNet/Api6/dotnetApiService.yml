@@ -1,0 +1,21 @@
+version: '3.9'
+networks:
+  devops:
+    driver: overlay
+    ipam:
+      driver: default
+
+services:
+    dotnetapi:
+        image: api6:0.3
+        ports:
+          - target: 80
+            published: 5005
+            mode: host
+        deploy:
+          replicas: 1
+        secrets:
+          - devops_db_password
+secrets:
+   devops_db_password:
+     external: true
