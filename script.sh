@@ -6,11 +6,9 @@ do
         ;;  
     -up)  
         docker service update --force  --image wasm:latest  devops_dotnet
-        shift  
         ;;  
     *)  
         echo "$1 is not an option"  
         ;;  
   esac  
-  shift  
 done
